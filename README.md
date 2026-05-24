@@ -353,6 +353,9 @@ This project significantly improved practical understanding of blue team operati
 
 ---
 
-# Author
+## Author
 
-Built as part of a hands-on SOC analyst learning roadmap focused on Elastic SIEM, threat hunting, and incident investigation.
+**Karthikeyan**  
+Cybersecurity Engineering Student | Blue Team | SOC Analyst in the Making  
+🔗 [LinkedIn](https://www.linkedin.com/in/karthi-keyan-9042862bb)  
+🐙 [GitHub](https://github.com/mars13-tech)
