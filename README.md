@@ -66,6 +66,7 @@ home-soc-lab/
 │   └── timeline-analysis.png        — Full attack timeline reconstruction
 │
 ├── notes/
+│   ├── notes-index.md               — Index and summary of all learning notes
 │   ├── day2-learning-notes.md       — Elastic Cloud setup, first agent connection
 │   ├── day3-notes.md                — ECS fields, Kibana Discover navigation
 │   ├── day4-notes.md                — First KQL queries, PowerShell log analysis
@@ -77,6 +78,7 @@ home-soc-lab/
 ├── detection-rules/
 │   ├── encoded-powershell.md        — T1059.001 — Encoded PowerShell detection
 │   ├── brute-force.md               — T1110 — Brute force login detection
+│   ├── lolbin-detection.md          — T1218 — LOLBin abuse detection
 │   └── word-powershell.md           — T1566.001 — Office macro spawning PowerShell
 │
 ├── queries/
@@ -113,21 +115,25 @@ home-soc-lab/
 ## Key KQL Queries
 
 ### Encoded PowerShell Detection
+
 ```kql
 process.command_line: (*EncodedCommand* or *-enc* or *-e * or *-ec *)
 ```
 
 ### LOLBin Abuse Detection
+
 ```kql
 process.name: ("certutil.exe" or "rundll32.exe" or "mshta.exe" or "wscript.exe" or "cscript.exe" or "regsvr32.exe")
 ```
 
 ### Office Spawning PowerShell
+
 ```kql
 process.parent.name: ("winword.exe" or "excel.exe" or "powerpnt.exe") and process.name: "powershell.exe"
 ```
 
 ### Brute Force Detection
+
 ```kql
 event.action: "logon-failed"
 ```
@@ -172,11 +178,11 @@ event.action: "logon-failed"
 | Skill | Evidence |
 |---|---|
 | SIEM Deployment | setup/ — full Elastic Cloud setup documented |
-| Detection Engineering | detection-rules/ — 3 rules with MITRE mapping |
+| Detection Engineering | detection-rules/ — 4 rules with MITRE mapping |
 | KQL Threat Hunting | queries/ — 20+ hunting queries across 7 categories |
 | Alert Tuning | alerts/alert-tuning.md — false positive reduction |
 | Incident Investigation | investigations/ — 7 investigation files |
-| Log Analysis | notes/ — 7 days of progressive learning notes |
+| Log Analysis | notes/ — 8 learning notes with index |
 | Architecture Understanding | architecture/ — data flow + diagram |
 | ECS Normalization | notes/ecs-fields.md — field reference documented |
 
