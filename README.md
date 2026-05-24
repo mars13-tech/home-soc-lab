@@ -1,355 +1,207 @@
-# Home SOC Lab — Elastic SIEM Project
+# Home SOC Lab — Elastic SIEM
 
-## Project Overview
-
-This project demonstrates a cloud-based Security Operations Center (SOC) lab built using Elastic SIEM. The lab was created to learn security monitoring, detection engineering, log analysis, and incident investigation using real Windows endpoint telemetry.
-
-The environment uses Elastic Cloud, Elastic Agent, Elasticsearch, and Kibana to collect, process, store, search, and investigate security events.
-
-This project was built completely from scratch as part of a hands-on SOC analyst training roadmap focused on practical blue team skills.
-
----
-
-# Objectives
-
-The main objectives of this project are:
-
-- Build a working Elastic SIEM environment
-- Understand SIEM architecture and data flow
-- Learn Elastic Common Schema (ECS)
-- Practice threat hunting using KQL
-- Create detection rules and alerts
-- Investigate suspicious activity
-- Simulate attack scenarios
-- Develop real SOC analyst skills
+**Author:** Karthikeyan  
+**Target Role:** SOC Analyst (Blue Team)  
+**Platform:** Elastic Cloud · Elasticsearch · Kibana · Elastic Agent  
+**Endpoint:** Windows 11  
+**Status:** Active  
+🔗 [LinkedIn](https://www.linkedin.com/in/karthi-keyan-9042862bb) · 🐙 [GitHub](https://github.com/mars13-tech)
 
 ---
 
-# Technologies Used
+## What This Is
 
-## SIEM Platform
-- Elastic Cloud
-- Elastic Security
-- Elasticsearch
-- Kibana
-- Elastic Agent
+A fully working home SOC lab built on Elastic SIEM from scratch.
 
-## Operating System
-- Windows 11
+Real Windows endpoint telemetry. Real detection rules. Real alerts. Real investigations.
 
-## Query Languages
-- KQL (Kibana Query Language)
-- EQL (Event Query Language)
-
-## Log Sources
-- Windows Event Logs
-- Endpoint telemetry
-- Process execution logs
-- Authentication logs
-- Network activity logs
+Built to develop the practical skills an L1/L2 SOC analyst uses every shift — not to follow a tutorial, but to understand what happens between an alert firing and a ticket closing.
 
 ---
 
-# SIEM Architecture
+## Lab Architecture
 
-```text
-Windows Endpoint
+```
+Windows 11 Endpoint
         ↓
-Elastic Agent
+Elastic Agent (Fleet managed)
         ↓
-Elastic Cloud
+Elastic Cloud (Elasticsearch)
         ↓
-Elasticsearch
+Kibana (Discover · Alerts · Timeline)
         ↓
-Kibana
+Detection Rules (KQL / EQL)
         ↓
-Detection Rules
-        ↓
-Security Alerts
+Security Alerts → Investigation → Response
 ```
 
 ---
 
-# Data Flow Explanation
+## Repository Structure
 
-The complete data flow inside the SIEM environment:
-
-1. A user performs an activity on the Windows endpoint
-2. Windows generates event logs
-3. Elastic Agent collects telemetry from the system
-4. Elastic ingest pipelines process the raw events
-5. ECS normalizes fields into a standard structure
-6. Elasticsearch stores searchable event data
-7. Kibana visualizes logs and alerts
-8. Detection rules analyze the telemetry
-9. Alerts are generated when suspicious activity matches rule logic
-
----
-
-# Understanding ECS
-
-ECS (Elastic Common Schema) standardizes field names across different log sources.
-
-Example:
-
-Without ECS:
-```text
-username
-user
-account
-login_user
 ```
-
-With ECS:
-```text
-user.name
-```
-
-This normalization makes:
-- Threat hunting easier
-- Detection rules consistent
-- Correlation faster
-- Investigations more efficient
-
----
-
-# Important ECS Fields
-
-| ECS Field | Purpose |
-|---|---|
-| host.name | Identifies affected system |
-| user.name | Identifies user activity |
-| process.name | Identifies executed process |
-| process.command_line | Shows full command execution |
-| source.ip | Shows source IP address |
-| destination.ip | Shows destination IP |
-| event.action | Describes performed action |
-| event.category | Categorizes event type |
-| event.outcome | Shows success or failure |
-
----
-
-# Skills Demonstrated
-
-## SIEM Deployment
-- Configured Elastic Cloud deployment
-- Connected Windows endpoint telemetry
-- Verified agent health and data ingestion
-
-## Threat Hunting
-- Searched endpoint telemetry using KQL
-- Investigated PowerShell execution activity
-- Explored authentication and network events
-
-## Detection Engineering
-- Created KQL-based detections
-- Developed alert rules
-- Tuned alerts to reduce false positives
-
-## Log Analysis
-- Analyzed Windows process execution logs
-- Investigated authentication telemetry
-- Explored ECS normalized fields
-
-## Incident Investigation
-- Investigated suspicious process execution
-- Analyzed process relationships
-- Reviewed endpoint telemetry timelines
-
----
-
-# Detection Use Cases
-
-This project includes detections for:
-
-- PowerShell execution
-- Encoded PowerShell commands
-- Failed login attempts
-- Brute force activity
-- Privilege escalation
-- Suspicious process execution
-- Network communication activity
-- Linux SSH login failures
-- Process chain analysis
-- Administrative activity monitoring
-
----
-
-# Example KQL Queries
-
-## PowerShell Execution Detection
-
-```kql
-process.name: "powershell.exe"
-```
-
----
-
-## Failed Login Detection
-
-```kql
-event.action: "logon-failed"
-```
-
----
-
-## Encoded PowerShell Detection
-
-```kql
-process.command_line: *EncodedCommand*
-```
-
----
-
-## Network Activity Detection
-
-```kql
-destination.ip: *
-```
-
----
-
-# Dashboards
-
-The project includes dashboards for:
-
-- Login activity monitoring
-- Process execution visibility
-- Security event monitoring
-- Threat hunting workflows
-- Endpoint activity analysis
-
-Dashboard screenshots are stored inside the `/dashboards` directory.
-
----
-
-# Detection Rules
-
-The project includes detection rules for:
-
-- PowerShell abuse
-- Brute force login attempts
-- Privilege escalation activity
-- Suspicious command execution
-- Authentication anomalies
-
-Detection documentation is stored inside the `/detection-rules` directory.
-
----
-
-# Investigation Workflow
-
-The investigation process followed in this lab includes:
-
-1. Alert review
-2. Event validation
-3. Process analysis
-4. User activity review
-5. Timeline investigation
-6. Network analysis
-7. Incident conclusion
-8. Response recommendation
-
----
-
-# Simulated Attack Investigation
-
-A simulated PowerShell attack chain was investigated during this project.
-
-Attack Flow:
-
-```text
-WINWORD.EXE
-        ↓
-powershell.exe
-        ↓
-Network Connection
-```
-
-Investigation details are documented inside the `/investigations` directory.
-
----
-
-# Repository Structure
-
-```text
 home-soc-lab/
 │
 ├── README.md
 │
-├── architecture/
-│ ├── data-flow.md
-│ └── siem-architecture.png
-│
 ├── setup/
-│ ├── elastic-cloud-setup.md
-│ ├── agent-install.md
-│ └── troubleshooting.md
+│   ├── elastic-cloud-setup.md       — Elastic Cloud deployment walkthrough
+│   ├── agent-install.md             — Fleet agent installation on Windows
+│   └── troubleshooting.md           — Real issues hit and how they were fixed
+│
+├── architecture/
+│   ├── data-flow.md                 — End-to-end data flow explanation
+│   └── siem-architecture.png        — Visual architecture diagram
 │
 ├── dashboards/
-│ ├── discover.png
-│ ├── powershell-logs.png
-│ └── fleet-agent.png
+│   ├── discover.png                 — Kibana Discover live telemetry view
+│   ├── discover-overview.png        — Full Discover dashboard overview
+│   ├── encoded-powershell-alert.png — Alert fired for encoded PowerShell
+│   ├── fleet-agent.png              — Fleet agent health confirmed
+│   ├── logged-in-events.png         — Authentication event monitoring
+│   ├── lolbin-hunt.png              — LOLBin threat hunting session
+│   ├── powershell-detection.png     — PowerShell execution detection
+│   ├── powershell-logs.png          — Raw PowerShell logs captured
+│   ├── process-chain.png            — Parent-child process analysis
+│   └── timeline-analysis.png        — Full attack timeline reconstruction
 │
 ├── notes/
-│ ├── ecs-fields.md
-│ └── discover-notes.md
-│
-├── queries/
+│   ├── day2-learning-notes.md       — Elastic Cloud setup, first agent connection
+│   ├── day3-notes.md                — ECS fields, Kibana Discover navigation
+│   ├── day4-notes.md                — First KQL queries, PowerShell log analysis
+│   ├── day5-notes.md                — Detection rule creation, alert configuration
+│   ├── day6-notes.md                — Alert tuning, false positive reduction
+│   ├── discover-notes.md            — Kibana Discover workflow reference
+│   └── ecs-fields.md                — ECS field reference for SOC analyst use
 │
 ├── detection-rules/
+│   ├── encoded-powershell.md        — T1059.001 — Encoded PowerShell detection
+│   ├── brute-force.md               — T1110 — Brute force login detection
+│   └── word-powershell.md           — T1566.001 — Office macro spawning PowerShell
+│
+├── queries/
+│   ├── kql-detections.md            — KQL queries tied to detection rules
+│   └── kql-threat-hunting.md        — KQL queries for active threat hunting
 │
 ├── investigations/
+│   ├── alert-triage-process.md      — L1 analyst alert triage workflow
+│   ├── attack-timeline.md           — Full attack timeline reconstruction
+│   ├── case-management-notes.md     — Ticket and case lifecycle documentation
+│   ├── encoded-powershell-investigation.md — Full encoded PowerShell walkthrough
+│   ├── incident-response-report.md  — Formal IR report
+│   ├── phishing-investigation.md    — Phishing attack investigation
+│   └── threat-hunting-report.md     — Proactive threat hunting session
 │
-├── alerts/
-│
-└── attack-simulation/
+└── alerts/
+    ├── alert-tuning.md              — False positive reduction documentation
+    └── alert-workflow.md            — End-to-end alert handling process
 ```
 
 ---
 
-# Key Learning Outcomes
+## Detection Rules
 
-This project helped develop understanding of:
-
-- SIEM architecture
-- Elastic data flow
-- ECS normalization
-- KQL threat hunting
-- Detection engineering
-- Log analysis
-- Alert creation
-- Security investigations
-- Endpoint telemetry analysis
+| Rule | MITRE Technique | ID | Severity |
+|---|---|---|---|
+| Encoded PowerShell Execution | Command and Scripting Interpreter: PowerShell | T1059.001 | High |
+| Brute Force Login Attempts | Brute Force | T1110 | Medium |
+| Office Application Spawning PowerShell | Phishing: Spearphishing Attachment | T1566.001 | High |
+| LOLBin Abuse | Signed Binary Proxy Execution | T1218 | High |
 
 ---
 
-# Future Improvements
+## Key KQL Queries
 
-Future enhancements planned for this lab:
+### Encoded PowerShell Detection
+```kql
+process.command_line: (*EncodedCommand* or *-enc* or *-e * or *-ec *)
+```
 
-- Sysmon integration
-- MITRE ATT&CK mapping
-- Sigma rule conversion
-- Advanced EQL detections
-- Threat intelligence integration
-- Linux endpoint telemetry
-- Automated response workflows
+### LOLBin Abuse Detection
+```kql
+process.name: ("certutil.exe" or "rundll32.exe" or "mshta.exe" or "wscript.exe" or "cscript.exe" or "regsvr32.exe")
+```
+
+### Office Spawning PowerShell
+```kql
+process.parent.name: ("winword.exe" or "excel.exe" or "powerpnt.exe") and process.name: "powershell.exe"
+```
+
+### Brute Force Detection
+```kql
+event.action: "logon-failed"
+```
+
+> Full query library → [queries/kql-threat-hunting.md](./queries/kql-threat-hunting.md)
 
 ---
 
-# Personal Reflection
+## Investigations Completed
 
-This project provided hands-on experience with real SIEM workflows used in Security Operations Centers.
+| Investigation | Attack Type | MITRE |
+|---|---|---|
+| Encoded PowerShell Investigation | PowerShell obfuscation | T1059.001, T1027 |
+| Phishing Investigation | Office macro execution | T1566.001 |
+| Threat Hunting Report | LOLBin abuse hunting | T1218 |
+| Attack Timeline Reconstruction | Full kill chain analysis | Multiple |
+| Alert Triage Process | L1 analyst workflow | — |
+| Case Management Notes | Ticket lifecycle | — |
+| Incident Response Report | Formal IR documentation | Multiple |
 
-Instead of only studying theory, the lab focused on:
-- Building the environment
-- Understanding telemetry
-- Investigating activity
-- Creating detections
-- Thinking like a SOC analyst
+---
 
-This project significantly improved practical understanding of blue team operations and detection engineering fundamentals.
+## ECS Fields Used in This Lab
+
+| ECS Field | Purpose |
+|---|---|
+| `host.name` | Identifies affected system |
+| `user.name` | Identifies user activity |
+| `process.name` | Identifies executed process |
+| `process.command_line` | Shows full command execution |
+| `process.parent.name` | Shows parent process — critical for chain analysis |
+| `source.ip` | Shows source IP address |
+| `destination.ip` | Shows destination IP |
+| `event.action` | Describes performed action |
+| `event.category` | Categorizes event type |
+| `event.outcome` | Shows success or failure |
+
+---
+
+## Skills Demonstrated
+
+| Skill | Evidence |
+|---|---|
+| SIEM Deployment | setup/ — full Elastic Cloud setup documented |
+| Detection Engineering | detection-rules/ — 3 rules with MITRE mapping |
+| KQL Threat Hunting | queries/ — 20+ hunting queries across 7 categories |
+| Alert Tuning | alerts/alert-tuning.md — false positive reduction |
+| Incident Investigation | investigations/ — 7 investigation files |
+| Log Analysis | notes/ — 7 days of progressive learning notes |
+| Architecture Understanding | architecture/ — data flow + diagram |
+| ECS Normalization | notes/ecs-fields.md — field reference documented |
+
+---
+
+## What I Learned That Wasn't in Any Tutorial
+
+Writing a detection rule took 20 minutes.
+
+Tuning it so it does not fire on legitimate PowerShell activity took much longer.
+
+A detection that fires on everything is noise. Noise gets ignored. Ignored alerts miss real attacks. That is how breaches happen.
+
+The other thing — debugging why logs were not ingesting taught me more about how Elastic Agent and Elasticsearch talk to each other than any documentation did.
+
+---
+
+## Future Improvements
+
+- [ ] Sysmon integration for deeper endpoint visibility
+- [ ] Sigma rule conversion for cross-platform detection
+- [ ] Advanced EQL detections for sequence-based attacks
+- [ ] Threat intelligence feed integration
+- [ ] Linux endpoint telemetry
+- [ ] Automated response workflows
 
 ---
 
